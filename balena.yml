@@ -1,0 +1,21 @@
+name: MobiusFlow®
+type: sw.application
+description: >-
+  MobiusFlow® IoT middleware. Visit https://www.mobiusflow.com for more information.
+post-provisioning: >-
+  ## Usage instructions
+assets:
+  repository:
+    type: blob.asset
+    data:
+      url: "https://github.com/mobiusflow/mobius-balena-deploy-upboard"
+  logo:
+    type: blob.asset
+    data:
+      url: >-
+        https://raw.githubusercontent.com/mobiusflow/mobius-balena-deploy-upboard/master/logo.png
+data:
+  defaultDeviceType: upboard
+  supportedDeviceTypes:
+    - upboard
+version: 1.10.6
