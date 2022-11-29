@@ -24,8 +24,11 @@ post-provisioning: >-
   ## Setting up Your Device
 
   After deploying MobiusFlow® to your device set the following device variables:
+
   - MOBIUS_ENABLE_CONFIG_UI = true
+
   - MOBIUS_LOCAL_TIMEOUT = 10000
+
   - MOBIUS_LICENCE = <your license code>
 
 assets:
