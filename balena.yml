@@ -29,7 +29,7 @@ post-provisioning: >-
 
   - MOBIUS_LOCAL_TIMEOUT = 10000
 
-  - MOBIUS_LICENCE = <your license code>
+  - MOBIUS_LICENCE = {your license code}
 
 assets:
   repository:
@@ -45,4 +45,4 @@ data:
   defaultDeviceType: upboard
   supportedDeviceTypes:
     - upboard
-version: "1.10.10"
+version: "1.10.11"
