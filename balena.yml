@@ -1,9 +1,14 @@
 name: MobiusFlow®
 type: sw.application
 description: >-
-  MobiusFlow® IoT middleware. Visit https://www.mobiusflow.com for more information.
+  MobiusFlow® - Advanced middleware for smart buildings, industry, and the Internet of Things.
 post-provisioning: >-
-  ## Usage instructions
+  ## About
+  MobiusFlow® is a scalable, device and protocol agnostic IoT system that can enable an increase in global efficiencies, reduce environmental impact and waste, whilst connecting millions of devices via numerous ecosystems, across multiple locations, to be analysed and acted upon remotely based on actual real-time data.
+  A huge range of sensors can be connected to MobiusFlow® to transmit the relevant data to multiple sources for analysis and actions based on agreed parameters for each device, environment or combined with third party data such as local weather stations to adjust systems accordingly.
+  Visit https://www.mobiusflow.com for more information.
+
+  ## Setting up Your Device
 assets:
   repository:
     type: blob.asset
