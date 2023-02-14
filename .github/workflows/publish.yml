@@ -47,8 +47,8 @@ jobs:
 
       - name: UpBoard
         run: |
-          cp templates\balena-template.yml ./balena.yml
-          cp templates\docker-template.yml ./docker-compose.yml
+          cp templates/balena-template.yml ./balena.yml
+          cp templates/docker-template.yml ./docker-compose.yml
           sed -i -e 's/defaultDeviceType: ARCHITECTURE/DeviceType: upboard/g' ./balena.yml
           sed -i -e 's/- ARCHITECTURE/- upboard/g' ./balena.yml
           sed -i -e 's/version: VERSION/version: "${{ steps.source_tag.outputs.SOURCE_TAG }}"/g' ./balena.yml
@@ -66,8 +66,8 @@ jobs:
       - name: RaspberryPi4
         run: |
           rm *.yml
-          cp templates\balena-template.yml ./balena.yml
-          cp templates\docker-template.yml ./docker-compose.yml
+          cp templates/balena-template.yml ./balena.yml
+          cp templates/docker-template.yml ./docker-compose.yml
           sed -i -e 's/defaultDeviceType: ARCHITECTURE/DeviceType: raspberrypi4-64/g' ./balena.yml
           sed -i -e 's/- ARCHITECTURE/- raspberrypi4-64/g' ./balena.yml
           sed -i -e 's/version: VERSION/version: "${{ steps.source_tag.outputs.SOURCE_TAG }}"/g' ./balena.yml
@@ -85,8 +85,8 @@ jobs:
       - name: Intel Nuc
         run: |
           rm *.yml
-          cp templates\balena-template.yml ./balena.yml
-          cp templates\docker-template.yml ./docker-compose.yml
+          cp templates/balena-template.yml ./balena.yml
+          cp templates/docker-template.yml ./docker-compose.yml
           sed -i -e 's/defaultDeviceType: ARCHITECTURE/DeviceType: intel-nuc/g' ./balena.yml
           sed -i -e 's/- ARCHITECTURE/- intel-nuc/g' ./balena.yml
           sed -i -e 's/version: VERSION/version: "${{ steps.source_tag.outputs.SOURCE_TAG }}"/g' ./balena.yml
