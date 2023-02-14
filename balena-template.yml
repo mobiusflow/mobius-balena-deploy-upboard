@@ -35,12 +35,12 @@ assets:
   repository:
     type: blob.asset
     data:
-      url: "https://github.com/mobiusflow/mobius-balena-deploy-upboard"
+      url: "https://github.com/mobiusflow/mobius-deploy-balena"
   logo:
     type: blob.asset
     data:
       url: >-
-        https://raw.githubusercontent.com/mobiusflow/mobius-balena-deploy-upboard/master/logo.png
+        https://raw.githubusercontent.com/mobiusflow/mobius-deploy-balena/master/logo.png
 data:
   defaultDeviceType: ARCHITECTURE
   supportedDeviceTypes:

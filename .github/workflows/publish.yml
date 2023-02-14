@@ -54,39 +54,75 @@ jobs:
           sed -i -e 's/defaultDeviceType: ARCHITECTURE/DeviceType: upboard/g' ./balena.yml
           sed -i -e 's/- ARCHITECTURE/- upboard/g' ./balena.yml
           sed -i -e 's/version: VERSION/version: "${{ steps.source_tag.outputs.SOURCE_TAG }}"/g' ./balena.yml
-
-          cat ./balena.yml
-
           sed -i -e 's/mobiusflow-le:VERSION/balena_up_mobiusflow-le:${{ steps.source_tag.outputs.SOURCE_TAG }}_${{ steps.common_ver.outputs.COMMON_VER }}/g' ./docker-compose.yml
           sed -i -e 's/manage:VERSION/balena_up_manage:${{ steps.source_tag.outputs.SOURCE_TAG }}/g' ./docker-compose.yml
 
-          cat ./docker-compose.yml
-      # - name: balena CLI Action
-      #   uses: balena-labs-research/community-cli-action@1.0.0
-      #   with:
-      #     balena_token: ${{secrets.BALENA_PUSH_TOKEN}}
-      #     balena_cli_commands: >
-      #       push MobiusFlow-Up;
-      #     balena_cli_version: 14.5.12
+      - name: balena CLI Action
+        uses: balena-labs-research/community-cli-action@1.0.0
+        with:
+          balena_token: ${{secrets.BALENA_PUSH_TOKEN}}
+          balena_cli_commands: >
+            push MobiusFlow-Up;
+          balena_cli_version: 14.5.12
 
-      # - name: Create release
-      #   env:
-      #     RELEASE_TYPE: ${{ contains(steps.source_tag.outputs.SOURCE_TAG, '-') }}
-      #     RELEASE_TAG: ${{ steps.source_tag.outputs.SOURCE_TAG }}
-      #   uses: actions/github-script@v6
-      #   with:
-      #     github-token: ${{ secrets.MOBIUS_ACTION_TOKEN }}
-      #     script: |
-      #       try {
-      #         await github.rest.repos.createRelease({
-      #           draft: false,
-      #           generate_release_notes: true,
-      #           name: process.env.RELEASE_TAG,
-      #           owner: context.repo.owner,
-      #           prerelease: process.env.RELEASE_TYPE === 'true',
-      #           repo: context.repo.repo,
-      #           tag_name: process.env.RELEASE_TAG,
-      #         });
-      #       } catch (error) {
-      #         core.setFailed(error.message);
-      #       }
+      - name: RaspberryPi4
+        run: |
+          mkdir raspi4
+          cp balena-template.yml raspi4/balena.yml
+          cp docker-template.yml raspi4/docker-compose.yml
+          cd raspi4
+          sed -i -e 's/defaultDeviceType: ARCHITECTURE/DeviceType: raspberrypi4-64/g' ./balena.yml
+          sed -i -e 's/- ARCHITECTURE/- raspberrypi4-64/g' ./balena.yml
+          sed -i -e 's/version: VERSION/version: "${{ steps.source_tag.outputs.SOURCE_TAG }}"/g' ./balena.yml
+          sed -i -e 's/mobiusflow-le:VERSION/balena_rpi4_mobiusflow-le:${{ steps.source_tag.outputs.SOURCE_TAG }}_${{ steps.common_ver.outputs.COMMON_VER }}/g' ./docker-compose.yml
+          sed -i -e 's/manage:VERSION/balena_rpi4_manage:${{ steps.source_tag.outputs.SOURCE_TAG }}/g' ./docker-compose.yml
+
+      - name: balena CLI Action
+        uses: balena-labs-research/community-cli-action@1.0.0
+        with:
+          balena_token: ${{secrets.BALENA_PUSH_TOKEN}}
+          balena_cli_commands: >
+            push MobiusFlow-Up;
+          balena_cli_version: 14.5.12
+
+      - name: Intel Nuc
+        run: |
+          mkdir nuc
+          cp balena-template.yml nuc/balena.yml
+          cp docker-template.yml nuc/docker-compose.yml
+          cd nuc
+          sed -i -e 's/defaultDeviceType: ARCHITECTURE/DeviceType: intel-nuc/g' ./balena.yml
+          sed -i -e 's/- ARCHITECTURE/- intel-nuc/g' ./balena.yml
+          sed -i -e 's/version: VERSION/version: "${{ steps.source_tag.outputs.SOURCE_TAG }}"/g' ./balena.yml
+          sed -i -e 's/mobiusflow-le:VERSION/balena_nuc_mobiusflow-le:${{ steps.source_tag.outputs.SOURCE_TAG }}_${{ steps.common_ver.outputs.COMMON_VER }}/g' ./docker-compose.yml
+          sed -i -e 's/manage:VERSION/balena_nuc_manage:${{ steps.source_tag.outputs.SOURCE_TAG }}/g' ./docker-compose.yml
+
+      - name: balena CLI Action
+        uses: balena-labs-research/community-cli-action@1.0.0
+        with:
+          balena_token: ${{secrets.BALENA_PUSH_TOKEN}}
+          balena_cli_commands: >
+            push MobiusFlow-Up;
+          balena_cli_version: 14.5.12
+
+      - name: Create release
+        env:
+          RELEASE_TYPE: ${{ contains(steps.source_tag.outputs.SOURCE_TAG, '-') }}
+          RELEASE_TAG: ${{ steps.source_tag.outputs.SOURCE_TAG }}
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.MOBIUS_ACTION_TOKEN }}
+          script: |
+            try {
+              await github.rest.repos.createRelease({
+                draft: false,
+                generate_release_notes: true,
+                name: process.env.RELEASE_TAG,
+                owner: context.repo.owner,
+                prerelease: process.env.RELEASE_TYPE === 'true',
+                repo: context.repo.repo,
+                tag_name: process.env.RELEASE_TAG,
+              });
+            } catch (error) {
+              core.setFailed(error.message);
+            }
