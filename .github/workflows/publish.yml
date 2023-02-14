@@ -57,8 +57,8 @@ jobs:
 
           cat ./balena.yml
 
-          sed -i -e 's/ghcr.io/mobiusflow/mobiusflow-le:VERSION/ghcr.io/mobiusflow/balena_up_mobiusflow-le:${{ steps.source_tag.outputs.SOURCE_TAG }}_${{ steps.common_ver.outputs.COMMON_VER }}/g' ./docker-compose.yml
-          sed -i -e 's/ghcr.io/mobiusflow/manage:VERSION/ghcr.io/mobiusflow/balena_up_manage:${{ steps.source_tag.outputs.SOURCE_TAG }}/g' ./docker-compose.yml
+          sed -i -e 's/mobiusflow-le:VERSION/balena_up_mobiusflow-le:${{ steps.source_tag.outputs.SOURCE_TAG }}_${{ steps.common_ver.outputs.COMMON_VER }}/g' ./docker-compose.yml
+          sed -i -e 's/manage:VERSION/balena_up_manage:${{ steps.source_tag.outputs.SOURCE_TAG }}/g' ./docker-compose.yml
 
           cat ./docker-compose.yml
       # - name: balena CLI Action
