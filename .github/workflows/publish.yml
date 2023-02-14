@@ -23,11 +23,11 @@ jobs:
 
       - name: Get build package version
         id: source_ver
-        run: echo "SOURCE_VER=v$(grep version ./package.json | sed -n 's/^.*"\([0-9][^"]*\)".*$/\1/p')" >> $GITHUB_OUTPUT
+        run: echo "SOURCE_VER=$(grep version ./package.json | sed -n 's/^.*"\([0-9][^"]*\)".*$/\1/p')" >> $GITHUB_OUTPUT
 
       - name: Get common core version
         id: common_ver
-        run: echo "COMMON_VER=v$(grep common-core ./package.json | sed -n 's/^.*"\([0-9][^"]*\)".*$/\1/p')" >> $GITHUB_OUTPUT
+        run: echo "COMMON_VER=$(grep common-core ./package.json | sed -n 's/^.*"\([0-9][^"]*\)".*$/\1/p')" >> $GITHUB_OUTPUT
 
       - name: Do tag and version match?
         if: steps.source_tag.outputs.SOURCE_TAG != steps.source_ver.outputs.SOURCE_VER
