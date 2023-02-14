@@ -41,32 +41,44 @@ jobs:
           always-auth: true
           scope: "@mobiusflow"
 
-      - name: balena CLI Action
-        uses: balena-labs-research/community-cli-action@1.0.0
-        with:
-          balena_token: ${{secrets.BALENA_PUSH_TOKEN}}
-          balena_cli_commands: >
-            push MobiusFlow-Up;
-          balena_cli_version: 14.5.12
+      - name: UpBoard
+        run: |
+          mkdir upboard
+          cp balena-template.yml upboard/balena.yml
+          cp docker-template.yml upboard/docker-compose.yml
+          cd upboard
+          sed -i -e 's/defaultDeviceType: ARCHITECTURE/DeviceType: upboard/g' ./balena.yml
+          sed -i -e 's/- ARCHITECTURE/- upboard/g' ./balena.yml
+          sed -i -e 's/version: VERSION/version: VERSION "${{ steps.source_tag.outputs.SOURCE_TAG }}"/g' ./balena.yml
 
-      - name: Create release
-        env:
-          RELEASE_TYPE: ${{ contains(steps.source_tag.outputs.SOURCE_TAG, '-') }}
-          RELEASE_TAG: ${{ steps.source_tag.outputs.SOURCE_TAG }}
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.MOBIUS_ACTION_TOKEN }}
-          script: |
-            try {
-              await github.rest.repos.createRelease({
-                draft: false,
-                generate_release_notes: true,
-                name: process.env.RELEASE_TAG,
-                owner: context.repo.owner,
-                prerelease: process.env.RELEASE_TYPE === 'true',
-                repo: context.repo.repo,
-                tag_name: process.env.RELEASE_TAG,
-              });
-            } catch (error) {
-              core.setFailed(error.message);
-            }
+          cat ./balena.yml
+
+      # - name: balena CLI Action
+      #   uses: balena-labs-research/community-cli-action@1.0.0
+      #   with:
+      #     balena_token: ${{secrets.BALENA_PUSH_TOKEN}}
+      #     balena_cli_commands: >
+      #       push MobiusFlow-Up;
+      #     balena_cli_version: 14.5.12
+
+      # - name: Create release
+      #   env:
+      #     RELEASE_TYPE: ${{ contains(steps.source_tag.outputs.SOURCE_TAG, '-') }}
+      #     RELEASE_TAG: ${{ steps.source_tag.outputs.SOURCE_TAG }}
+      #   uses: actions/github-script@v6
+      #   with:
+      #     github-token: ${{ secrets.MOBIUS_ACTION_TOKEN }}
+      #     script: |
+      #       try {
+      #         await github.rest.repos.createRelease({
+      #           draft: false,
+      #           generate_release_notes: true,
+      #           name: process.env.RELEASE_TAG,
+      #           owner: context.repo.owner,
+      #           prerelease: process.env.RELEASE_TYPE === 'true',
+      #           repo: context.repo.repo,
+      #           tag_name: process.env.RELEASE_TAG,
+      #         });
+      #       } catch (error) {
+      #         core.setFailed(error.message);
+      #       }
