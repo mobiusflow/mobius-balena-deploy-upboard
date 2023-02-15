@@ -45,4 +45,4 @@ data:
   defaultDeviceType: upboard
   supportedDeviceTypes:
     - upboard
-version: "1.14.0-beta.30"
+version: "1.15.0-beta.2"
