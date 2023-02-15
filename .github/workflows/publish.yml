@@ -19,15 +19,11 @@ jobs:
       - name: Get tag
         id: source_tag
         run: |
-          echo "SOURCE_TAG=$(echo ${GITHUB_REF#refs/tags/} | sed 's/^v//')" >> $GITHUB_OUTPUT
+          echo "SOURCE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
       - name: Get build package version
         id: source_ver
-        run: echo "SOURCE_VER=$(grep version ./versions.json | sed -n 's/^.*"\([0-9][^"]*\)".*$/\1/p')" >> $GITHUB_OUTPUT
-
-      - name: Get common core version
-        id: common_ver
-        run: echo "COMMON_VER=$(grep common-core ./versions.json | sed -n 's/^.*"\([0-9][^"]*\)".*$/\1/p')" >> $GITHUB_OUTPUT
+        run: echo "SOURCE_VER=v$(grep version balena.yml | sed -n 's/^.*"\([0-9][^"]*\)".*$/\1/p')" >> $GITHUB_OUTPUT
 
       - name: Do tag and version match?
         if: steps.source_tag.outputs.SOURCE_TAG != steps.source_ver.outputs.SOURCE_VER
@@ -45,16 +41,6 @@ jobs:
           always-auth: true
           scope: "@mobiusflow"
 
-      - name: UpBoard
-        run: |
-          cp templates/balena-template.yml ./balena.yml
-          cp templates/docker-template.yml ./docker-compose.yml
-          sed -i -e 's/defaultDeviceType: ARCHITECTURE/DeviceType: upboard/g' ./balena.yml
-          sed -i -e 's/- ARCHITECTURE/- upboard/g' ./balena.yml
-          sed -i -e 's/version: VERSION/version: "${{ steps.source_ver.outputs.SOURCE_VER }}"/g' ./balena.yml
-          sed -i -e 's/mobiusflow-le:VERSION/balena_up_mobiusflow-le:${{ steps.source_ver.outputs.SOURCE_VER }}_${{ steps.common_ver.outputs.COMMON_VER }}/g' ./docker-compose.yml
-          sed -i -e 's/manage:VERSION/balena_up_manage:${{ steps.source_ver.outputs.SOURCE_VER }}/g' ./docker-compose.yml
-
       - name: balena CLI Action
         uses: balena-labs-research/community-cli-action@1.0.0
         with:
@@ -63,48 +49,10 @@ jobs:
             push MobiusFlow-Up;
           balena_cli_version: 14.5.12
 
-      - name: RaspberryPi4
-        run: |
-          rm *.yml
-          cp templates/balena-template.yml ./balena.yml
-          cp templates/docker-template.yml ./docker-compose.yml
-          sed -i -e 's/defaultDeviceType: ARCHITECTURE/DeviceType: raspberrypi4-64/g' ./balena.yml
-          sed -i -e 's/- ARCHITECTURE/- raspberrypi4-64/g' ./balena.yml
-          sed -i -e 's/version: VERSION/version: "${{ steps.source_ver.outputs.SOURCE_VER }}"/g' ./balena.yml
-          sed -i -e 's/mobiusflow-le:VERSION/balena_rpi4_mobiusflow-le:${{ steps.source_ver.outputs.SOURCE_VER }}_${{ steps.common_ver.outputs.COMMON_VER }}/g' ./docker-compose.yml
-          sed -i -e 's/manage:VERSION/balena_rpi4_manage:${{ steps.source_ver.outputs.SOURCE_VER }}/g' ./docker-compose.yml
-
-      - name: balena CLI Action
-        uses: balena-labs-research/community-cli-action@1.0.0
-        with:
-          balena_token: ${{secrets.BALENA_PUSH_TOKEN}}
-          balena_cli_commands: >
-            push MobiusFlow-RPI4;
-          balena_cli_version: 14.5.12
-
-      - name: Intel Nuc
-        run: |
-          rm *.yml
-          cp templates/balena-template.yml ./balena.yml
-          cp templates/docker-template.yml ./docker-compose.yml
-          sed -i -e 's/defaultDeviceType: ARCHITECTURE/DeviceType: intel-nuc/g' ./balena.yml
-          sed -i -e 's/- ARCHITECTURE/- intel-nuc/g' ./balena.yml
-          sed -i -e 's/version: VERSION/version: "${{ steps.source_ver.outputs.SOURCE_VER }}"/g' ./balena.yml
-          sed -i -e 's/mobiusflow-le:VERSION/balena_nuc_mobiusflow-le:${{ steps.source_ver.outputs.SOURCE_VER }}_${{ steps.common_ver.outputs.COMMON_VER }}/g' ./docker-compose.yml
-          sed -i -e 's/manage:VERSION/balena_nuc_manage:${{ steps.source_ver.outputs.SOURCE_VER }}/g' ./docker-compose.yml
-
-      - name: balena CLI Action
-        uses: balena-labs-research/community-cli-action@1.0.0
-        with:
-          balena_token: ${{secrets.BALENA_PUSH_TOKEN}}
-          balena_cli_commands: >
-            push MobiusFlow-NUC;
-          balena_cli_version: 14.5.12
-
       - name: Create release
         env:
-          RELEASE_TYPE: ${{ contains(steps.source_ver.outputs.SOURCE_VER, '-') }}
-          RELEASE_TAG: ${{ steps.source_ver.outputs.SOURCE_VER }}
+          RELEASE_TYPE: ${{ contains(steps.source_tag.outputs.SOURCE_TAG, '-') }}
+          RELEASE_TAG: ${{ steps.source_tag.outputs.SOURCE_TAG }}
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.MOBIUS_ACTION_TOKEN }}
