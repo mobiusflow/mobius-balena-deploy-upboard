@@ -23,11 +23,11 @@ post-provisioning: >-
 
   ## Setting up Your Device
 
-  After deploying MobiusFlow® to your device set the following device variables:
+  After deploying MobiusFlow® to your device, override the following device variables:
 
   - MOBIUS_HUB_ID: 000001 (the MobiusFlow® hub ID for this device)
 
-  - MOBIUS_LICENCE = (your license code)
+  - MOBIUS_LICENCE = <replace with your licence code>
 
 assets:
   repository:
@@ -41,7 +41,7 @@ assets:
         https://raw.githubusercontent.com/mobiusflow/mobius-balena-deploy-upboard/master/logo.png
 data:
   applicationEnvironmentVariables:
-    - MOBIUS_HUB_ID: 000001
+    - MOBIUS_HUB_ID: "000001"
     - MOBIUS_HUB_RESET_PSKS: true
     - MOBIUS_LOG_SERVICE_STATUS: false
     - MOBIUS_LOCAL_TIMEOUT: 10000
