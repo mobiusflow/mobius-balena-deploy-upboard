@@ -32,20 +32,4 @@ After deploying MobiusFlow® to your device, override the following device varia
 
 - MOBIUS_HUB_ID: 000001 (the MobiusFlow® hub ID for this device)
 
-- MOBIUS_LICENCE = <replace with your licence code>
-
-assets:
-repository:
-type: blob.asset
-data:
-url: "https://github.com/mobiusflow/mobius-balena-deploy-upboard"
-logo:
-type: blob.asset
-data:
-url: >-
-https://raw.githubusercontent.com/mobiusflow/mobius-balena-deploy-upboard/master/logo.png
-data:
-applicationEnvironmentVariables: - MOBIUS_HUB_ID: "000001" - MOBIUS_HUB_RESET_PSKS: true - MOBIUS_LOG_SERVICE_STATUS: false - MOBIUS_LOCAL_TIMEOUT: 10000 - MOBIUS_ENABLE_CONFIG_UI: true - MOBIUS_LICENCE: <replace with your licence code> - MOBIUS_LICENCE_RENEW: false - MOBIUS_ENGINE_API_PORT: 8443 - MOBIUS_ENGINE_API_AUTH_PROVIDER: local
-defaultDeviceType: upboard
-supportedDeviceTypes: - upboard
-version: "1.15.0-beta.2"
+- MOBIUS_LICENCE = {replace with your licence code}
