@@ -2,12 +2,6 @@
 
 MobiusFlow® deploy for balena-Hub (Up Board)
 
-name: MobiusFlow®
-type: sw.application
-description: >-
-MobiusFlow® - Advanced middleware for smart buildings, industry, and the Internet of Things.
-post-provisioning: >-
-
 ## About
 
 MobiusFlow® is a scalable, device and protocol agnostic IoT system that can enable an increase

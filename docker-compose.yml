@@ -38,14 +38,14 @@ services:
       io.resin.features.dbus: "1"
       io.resin.features.supervisor-api: "1"
 
-  # mongodb:
-  #   image: bitnami/mongodb:4.4
-  #   container_name: mongodb
-  #   restart: always
-  #   environment:
-  #     - MONGODB_ROOT_PASSWORD=r5DybE57qug3WaHebeUy2bAvvVhKXUWHD
-  #     - MONGODB_USERNAME=mobius
-  #     - MONGODB_PASSWORD=RmzsXQYReLHaCS5wWGjAPjtJ7VnTw4qL
-  #     - MONGODB_DATABASE=mobius
-  #   volumes:
-  #     - mongodb:/bitnami/mongodb
+  mongodb:
+    image: bitnami/mongodb:4.4
+    container_name: mongodb
+    restart: always
+    environment:
+      - MONGODB_ROOT_PASSWORD=r5DybE57qug3WaHebeUy2bAvvVhKXUWHD
+      - MONGODB_USERNAME=mobius
+      - MONGODB_PASSWORD=RmzsXQYReLHaCS5wWGjAPjtJ7VnTw4qL
+      - MONGODB_DATABASE=mobius
+    volumes:
+      - mongodb:/bitnami/mongodb
