@@ -25,23 +25,31 @@ post-provisioning: >-
 
   After deploying MobiusFlow® to your device set the following device variables:
 
-  - MOBIUS_ENABLE_CONFIG_UI = true
+  - MOBIUS_HUB_ID: 000001 (the MobiusFlow® hub ID for this device)
 
-  - MOBIUS_LOCAL_TIMEOUT = 10000
-
-  - MOBIUS_LICENCE = {your license code}
+  - MOBIUS_LICENCE = (your license code)
 
 assets:
   repository:
     type: blob.asset
     data:
-      url: "https://github.com/mobiusflow/mobius-deploy-balena"
+      url: "https://github.com/mobiusflow/mobius-build-balena"
   logo:
     type: blob.asset
     data:
       url: >-
-        https://raw.githubusercontent.com/mobiusflow/mobius-deploy-balena/master/logo.png
+        https://raw.githubusercontent.com/mobiusflow/mobius-build-balena/master/logo.png
 data:
+  applicationEnvironmentVariables:
+    - MOBIUS_HUB_ID: 000001
+    - MOBIUS_HUB_RESET_PSKS: true
+    - MOBIUS_LOG_SERVICE_STATUS: false
+    - MOBIUS_LOCAL_TIMEOUT: 10000
+    - MOBIUS_ENABLE_CONFIG_UI: true
+    - MOBIUS_LICENCE: <replace with your licence code>
+    - MOBIUS_LICENCE_RENEW: false
+    - MOBIUS_ENGINE_API_PORT: 8443
+    - MOBIUS_ENGINE_API_AUTH_PROVIDER: local
   defaultDeviceType: upboard
   supportedDeviceTypes:
     - upboard
