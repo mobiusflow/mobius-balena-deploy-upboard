@@ -22,7 +22,7 @@ services:
       io.resin.features.supervisor-api: "1"
 
   nginx:
-    image: ghcr.io/mobiusflow/nginx-cloud:1.2.2-balena-1
+    image: ghcr.io/mobiusflow/nginx-cloud:1.2.2-balena-2
     container_name: nginx
     privileged: false
     restart: always
