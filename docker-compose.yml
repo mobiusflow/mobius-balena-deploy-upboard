@@ -4,39 +4,36 @@ volumes:
   mobius-licence:
   mongodb:
 
-networks:
-  frontend:
-  backend:
-
 services:
   mobius:
     image: ghcr.io/mobiusflow/balena_up_mobiusflow-le:1.19.0-beta.9_1.19.0-beta.21
     privileged: true
     restart: always
+    ports:
+      - 8080:80
+      - 443:443
+      - 502:502
+      - 8443:8443
+      - 1883:1883
+      - 4840:4840
+      - 8883:8883
+      - 10502:10502
+      - 10001:10001
+      - 30815:30815
+      - 30883:30883
     volumes:
       - resin-data:/data
       - mobius-licence:/.licence
-    networks:
-      - backend
     labels:
       io.resin.features.supervisor-api: "1"
 
   nginx:
-    image: ghcr.io/mobiusflow/nginx-cloud:1.2.2-balena-3
+    build: ./nginx
     container_name: nginx
     privileged: false
     restart: always
-    # environment:
-    #   - NGINX_UI_CONTAINER=mobius
     ports:
-      - 1880:1880
-      - 8443:8443
-      - 1883:1883
-      - 30814:30815
-      - 30817:30817
-    networks:
-      - frontend
-      - backend
+      - 80:80
     logging:
       driver: "json-file"
       options:
@@ -65,7 +62,5 @@ services:
       - MONGODB_DATABASE=mobius
     volumes:
       - mongodb:/bitnami/mongodb
-    networks:
-      - backend
     logging:
       driver: none
