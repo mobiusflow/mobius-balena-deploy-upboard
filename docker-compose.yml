@@ -101,28 +101,28 @@ services:
   #   depends_on:
   #     - chirpstack
 
-  # postgres:
-  #   build: ./chirpstack/postgres
-  #   container_name: postgres
-  #   restart: unless-stopped
-  #   volumes:
-  #     - postgresqldata:/var/lib/postgresql/data
-  #   environment:
-  #     - POSTGRES_PASSWORD=root
-
-  # redis:
-  #   image: redis:7-alpine
-  #   container_name: redis
-  #   restart: unless-stopped
-  #   volumes:
-  #     - redisdata:/data
-
-  mosquitto:
-    build: ./chirpstack/mosquitto
-    container_name: mosquitto
+  postgres:
+    build: ./chirpstack/postgres
+    container_name: postgres
     restart: unless-stopped
-    user: 1883:1883
-    ports:
-      - 1883:1883
     volumes:
-      - mosquitto-config:/config
+      - postgresqldata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=root
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: unless-stopped
+    volumes:
+      - redisdata:/data
+
+  # mosquitto:
+  #   build: ./chirpstack/mosquitto
+  #   container_name: mosquitto
+  #   restart: unless-stopped
+  #   user: 1883:1883
+  #   ports:
+  #     - 1883:1883
+  #   volumes:
+  #     - mosquitto-config:/config
