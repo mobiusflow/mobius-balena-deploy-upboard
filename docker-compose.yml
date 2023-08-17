@@ -121,6 +121,7 @@ services:
     build: ./chirpstack/mosquitto
     container_name: mosquitto
     restart: unless-stopped
+    user: 1883:1883
     ports:
       - 1883:1883
     volumes:
