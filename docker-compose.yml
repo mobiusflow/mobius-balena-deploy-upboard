@@ -10,7 +10,7 @@ networks:
 
 services:
   mobius:
-    image: ghcr.io/mobiusflow/balena_up_mobiusflow-le:1.19.0-beta.8_1.19.0-beta.21
+    image: ghcr.io/mobiusflow/balena_up_mobiusflow-le:1.19.0-beta.9_1.19.0-beta.21
     privileged: true
     restart: always
     volumes:
