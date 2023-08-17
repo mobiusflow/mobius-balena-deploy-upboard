@@ -4,6 +4,4 @@ RUN mkdir -p /mosquitto/config
 COPY ./configuration/mosquitto.conf /mosquitto/config/mosquitto.conf
 COPY ./configuration/passwords /mosquitto/config/passwords
 COPY ./configuration/passwords /config/passwords
-
-RUN adduser mosquitto -u 1883
-RUN chown -R mosquitto:mosquitto /config
+RUN chown -R mosquitto:mosquitto /config/passwords
