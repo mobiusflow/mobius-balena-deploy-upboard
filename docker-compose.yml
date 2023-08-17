@@ -3,6 +3,8 @@ volumes:
   resin-data:
   mobius-licence:
   mongodb:
+  postgresqldata:
+  redisdata:
 
 services:
   mobius:
@@ -14,7 +16,6 @@ services:
       - 443:443
       - 502:502
       - 8443:8443
-      - 1883:1883
       - 4840:4840
       - 8883:8883
       - 10502:10502
@@ -64,3 +65,64 @@ services:
       - mongodb:/bitnami/mongodb
     logging:
       driver: none
+
+  chirpstack:
+    build: ./chirpstack
+    container_name: chirpstack
+    command: -c /etc/chirpstack
+    restart: unless-stopped
+    volumes:
+      - ./configuration/chirpstack:/etc/chirpstack
+      - ./lorawan-devices:/opt/lorawan-devices
+    depends_on:
+      - postgres
+      - mosquitto
+      - redis
+    environment:
+      - MQTT_BROKER_HOST=mosquitto
+      - REDIS_HOST=redis
+      - POSTGRESQL_HOST=postgres
+    ports:
+      - 8081:8080
+
+  chirpstack-gateway-bridge-eu868:
+    build: ./chirpstack/chirpstack-gateway-bridge
+    container_name: chirpstack-gateway-bridge-eu868
+    restart: unless-stopped
+    ports:
+      - 1700:1700/udp
+    volumes:
+      - ./configuration/chirpstack-gateway-bridge:/etc/chirpstack-gateway-bridge
+    depends_on: 
+      - mosquitto
+
+  chirpstack-rest-api:
+    image: chirpstack/chirpstack-rest-api:4
+    restart: unless-stopped
+    command: --server chirpstack:8080 --bind 0.0.0.0:8090 --insecure
+    ports:
+      - 8090:8090
+    depends_on:
+      - chirpstack
+
+  postgres:
+    build: ./chirpstack/postgres
+    container_name: postgres
+    restart: unless-stopped
+    volumes:
+      - postgresqldata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=root
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redisdata:/data
+
+  mosquitto:
+    build: ./mosquitto
+    container_name: mosquitto
+    restart: unless-stopped
+    ports:
+      - 1883:1883
