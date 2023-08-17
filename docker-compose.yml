@@ -67,13 +67,10 @@ services:
       driver: none
 
   chirpstack:
-    build: ./chirpstack
+    build: ./chirpstack/chirpstack
     container_name: chirpstack
     command: -c /etc/chirpstack
     restart: unless-stopped
-    volumes:
-      - ./configuration/chirpstack:/etc/chirpstack
-      - ./lorawan-devices:/opt/lorawan-devices
     depends_on:
       - postgres
       - mosquitto
@@ -86,13 +83,11 @@ services:
       - 8081:8080
 
   chirpstack-gateway-bridge-eu868:
-    build: ./chirpstack/chirpstack-gateway-bridge
+    build: ./chirpstack/gateway-bridge
     container_name: chirpstack-gateway-bridge-eu868
     restart: unless-stopped
     ports:
       - 1700:1700/udp
-    volumes:
-      - ./configuration/chirpstack-gateway-bridge:/etc/chirpstack-gateway-bridge
     depends_on: 
       - mosquitto
 
@@ -116,12 +111,13 @@ services:
 
   redis:
     image: redis:7-alpine
+    container_name: redis
     restart: unless-stopped
     volumes:
       - redisdata:/data
 
   mosquitto:
-    build: ./mosquitto
+    build: ./chirpstack/mosquitto
     container_name: mosquitto
     restart: unless-stopped
     ports:
