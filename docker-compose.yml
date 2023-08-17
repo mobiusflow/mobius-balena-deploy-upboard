@@ -5,6 +5,7 @@ volumes:
   mongodb:
   postgresqldata:
   redisdata:
+  mosquitto-config:
 
 services:
   # mobius:
@@ -122,3 +123,5 @@ services:
     restart: unless-stopped
     ports:
       - 1883:1883
+    volumes:
+      - mosquitto-config:/config
