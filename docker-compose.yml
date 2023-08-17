@@ -75,7 +75,7 @@ services:
     restart: unless-stopped
     depends_on:
       - postgres
-      - mosquitto
+      - mobius
       - redis
     environment:
       - MQTT_BROKER_HOST=mobius
@@ -91,7 +91,7 @@ services:
     ports:
       - 1700:1700/udp
     depends_on: 
-      - mosquitto
+      - mobius
 
   # chirpstack-rest-api:
   #   image: chirpstack/chirpstack-rest-api:4
