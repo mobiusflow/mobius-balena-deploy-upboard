@@ -4,9 +4,14 @@
 [integration.mqtt.auth.generic]
 servers=["tcp://mobius:1883/"]
 username="chirpstack"
-password="chirpstack"
+password=""
 
 [integration.mqtt]
 event_topic_template="eu868/gateway/{{ .GatewayID }}/event/{{ .EventType }}"
 state_topic_template="eu868/gateway/{{ .GatewayID }}/state/{{ .StateType }}"
 command_topic_template="eu868/gateway/{{ .GatewayID }}/command/#"
+
+[backend]
+type="semtech_udp"
+  [backend.semtech_udp]
+  udp_bind="0.0.0.0:1700"
