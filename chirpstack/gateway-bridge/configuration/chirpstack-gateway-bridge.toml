@@ -4,7 +4,7 @@
 [integration.mqtt.auth.generic]
 servers=["tcp://mobius:1883/"]
 username="chirpstack"
-password=""
+# password=""
 
 [integration.mqtt]
 event_topic_template="eu868/gateway/{{ .GatewayID }}/event/{{ .EventType }}"
