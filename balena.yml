@@ -50,6 +50,9 @@ data:
     - MOBIUS_LICENCE_RENEW: false
     - MOBIUS_ENGINE_API_PORT: 8443
     - MOBIUS_ENGINE_API_AUTH_PROVIDER: local
+    - NGINX_UI_CONTAINER: mobius:80
+    - CHIRPSTACK_MQTT_PWD: <replace with your broker password>
+    - INTEGRATION__MQTT__AUTH__GENERIC__PASSWORD: <replace with your broker password>
   defaultDeviceType: upboard
   supportedDeviceTypes:
     - upboard
