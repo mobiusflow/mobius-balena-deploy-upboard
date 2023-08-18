@@ -80,7 +80,6 @@ services:
       - redis
     environment:
       - MQTT_BROKER_HOST=mobius
-      - CHIRPSTACK_MQTT_PWD=chirpstack
       - REDIS_HOST=redis
       - POSTGRESQL_HOST=postgres
     ports:
