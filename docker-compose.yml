@@ -5,7 +5,8 @@ volumes:
   mongodb:
   postgresqldata:
   redisdata:
-  mosquitto-config:
+  chirpstackconfig:
+
 
 services:
   mobius:
@@ -79,10 +80,13 @@ services:
       - redis
     environment:
       - MQTT_BROKER_HOST=mobius
+      - CHIRPSTACK_MQTT_PWD=chirpstack
       - REDIS_HOST=redis
       - POSTGRESQL_HOST=postgres
     ports:
       - 8081:8080
+    volumes:
+      - chirpstackconfig:/etc/chirpstack
 
   chirpstack-gateway-bridge-eu868:
     build: ./chirpstack/gateway-bridge
@@ -117,13 +121,3 @@ services:
     restart: unless-stopped
     volumes:
       - redisdata:/data
-
-  # mosquitto:
-  #   build: ./chirpstack/mosquitto
-  #   container_name: mosquitto
-  #   restart: unless-stopped
-  #   user: 1883:1883
-  #   ports:
-  #     - 1883:1883
-  #   volumes:
-  #     - mosquitto-config:/config
