@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  BALENA_APP_NAME: MobiusFlow-UP-V2
+  BALENA_APP_NAME: MobiusFlow-UP-v2
 
 jobs:
   publish:
@@ -46,7 +46,7 @@ jobs:
         with:
           balena_token: ${{secrets.BALENA_PUSH_TOKEN}}
           balena_cli_commands: >
-            push MobiusFlow-UP-V2;
+            push MobiusFlow-UP-v2;
           balena_cli_version: 14.5.12
 
       - name: Create release
