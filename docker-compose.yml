@@ -20,6 +20,7 @@ services:
     privileged: true
     restart: always
     ports:
+      - 8443:8443
       - 502:502
       - 1883:1883
       - 4840:4840
@@ -40,6 +41,8 @@ services:
     container_name: node-red
     privileged: false
     restart: always
+    ports:
+      - 1880:1880
     volumes:
       - node-red-assets:/assets
       - mobius-data:/data
