@@ -47,7 +47,7 @@ jobs:
           balena_token: ${{secrets.BALENA_PUSH_TOKEN}}
           balena_cli_commands: >
             push MobiusFlow-UP;
-          balena_cli_version: 14.5.12
+          balena_cli_version: 17.4.11
 
       - name: Create release
         env:
