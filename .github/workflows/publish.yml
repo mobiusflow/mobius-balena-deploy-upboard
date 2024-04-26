@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Get tag
         id: source_tag
@@ -34,9 +34,9 @@ jobs:
           exit -1
 
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: "18.x"
+          node-version: "20.x"
           registry-url: "https://npm.pkg.github.com"
           always-auth: true
           scope: "@mobiusflow"
@@ -53,7 +53,7 @@ jobs:
         env:
           RELEASE_TYPE: ${{ contains(steps.source_tag.outputs.SOURCE_TAG, '-') }}
           RELEASE_TAG: ${{ steps.source_tag.outputs.SOURCE_TAG }}
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.MOBIUS_ACTION_TOKEN }}
           script: |
