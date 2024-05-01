@@ -16,7 +16,7 @@ services:
       - node-red
 
   mobius:
-    image: ghcr.io/mobiusflow/balena_up_mobiusflow-v2-le:2.0.10_2.0.10
+    image: ghcr.io/mobiusflow/balena_up_mobiusflow-v2-le:2.0.12_2.0.12
     privileged: true
     restart: always
     ports:
@@ -48,7 +48,7 @@ services:
       - mobius-data:/data
 
   manage:
-    image: ghcr.io/mobiusflow/balena_up_manage-v2:2.0.10
+    image: ghcr.io/mobiusflow/balena_up_manage-v2:2.0.12
     privileged: true
     network_mode: host
     restart: always
