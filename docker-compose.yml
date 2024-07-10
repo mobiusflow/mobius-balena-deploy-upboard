@@ -1,7 +1,7 @@
 version: "2"
 volumes:
   mobius-data:
-  mobius-licence-manager:
+  mobius-licence:
   node-red-assets:
   node-red-data:
   mongodb:
@@ -16,7 +16,7 @@ services:
       - node-red
 
   mobius:
-    image: ghcr.io/mobiusflow/balena_up_mobiusflow-v2-le:2.5.11_2.5.10
+    image: ghcr.io/mobiusflow/balena_up_mobiusflow-v2-le:2.5.12_2.5.10
     privileged: true
     restart: always
     ports:
@@ -32,7 +32,7 @@ services:
       - 30883:30883
     volumes:
       - mobius-data:/data
-      - mobius-licence-manager:/licence
+      - mobius-licence:/licence
     labels:
       io.resin.features.supervisor-api: "1"
 
@@ -56,7 +56,7 @@ services:
       - 8080:8080
 
   manage:
-    image: ghcr.io/mobiusflow/balena_up_manage-v2:2.5.11
+    image: ghcr.io/mobiusflow/balena_up_manage-v2:2.5.12
     privileged: true
     network_mode: host
     restart: always
