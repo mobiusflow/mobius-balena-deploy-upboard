@@ -1,7 +1,7 @@
 version: "2"
 volumes:
   mobius-data:
-  mobius-licence:
+  mobius-licence-manager:
   node-red-assets:
   node-red-data:
   mongodb:
@@ -32,7 +32,7 @@ services:
       - 30883:30883
     volumes:
       - mobius-data:/data
-      - mobius-licence:/licence
+      - mobius-licence-manager:/licence
     labels:
       io.resin.features.supervisor-api: "1"
 
