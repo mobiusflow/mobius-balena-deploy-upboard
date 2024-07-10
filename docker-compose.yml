@@ -32,7 +32,7 @@ services:
       - 30883:30883
     volumes:
       - mobius-data:/data
-      - mobius-licence:/.licence
+      - mobius-licence:/licence
     labels:
       io.resin.features.supervisor-api: "1"
 
