@@ -53,4 +53,4 @@ data:
   defaultDeviceType: upboard
   supportedDeviceTypes:
     - upboard
-version: "2.5.19"
+version: "2.5.22"
