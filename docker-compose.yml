@@ -16,7 +16,7 @@ services:
       - node-red
 
   mobius:
-    image: ghcr.io/mobiusflow/balena_up_mobiusflow-v2-le:2.5.23_2.5.23
+    image: ghcr.io/mobiusflow/balena_up_mobiusflow-v2-le:2.5.30_2.5.30
     privileged: true
     restart: always
     ports:
@@ -64,7 +64,7 @@ services:
       - 8090:8080
 
   manage:
-    image: ghcr.io/mobiusflow/balena_up_manage-v2:2.5.23
+    image: ghcr.io/mobiusflow/balena_up_manage-v2:2.5.30
     privileged: true
     network_mode: host
     restart: always
@@ -74,16 +74,16 @@ services:
       io.resin.features.dbus: "1"
       io.resin.features.supervisor-api: "1"
 
-  mongodb:
-    image: bitnami/mongodb:4.4
-    container_name: mongodb
-    restart: always
-    environment:
-      - MONGODB_ROOT_PASSWORD=r5DybE57qug3WaHebeUy2bAvvVhKXUWHD
-      - MONGODB_USERNAME=mobius
-      - MONGODB_PASSWORD=RmzsXQYReLHaCS5wWGjAPjtJ7VnTw4qL
-      - MONGODB_DATABASE=mobius
-    volumes:
-      - mongodb:/bitnami/mongodb
-    logging:
-      driver: "none"
+  # mongodb:
+  #   image: bitnami/mongodb:4.4
+  #   container_name: mongodb
+  #   restart: always
+  #   environment:
+  #     - MONGODB_ROOT_PASSWORD=r5DybE57qug3WaHebeUy2bAvvVhKXUWHD
+  #     - MONGODB_USERNAME=mobius
+  #     - MONGODB_PASSWORD=RmzsXQYReLHaCS5wWGjAPjtJ7VnTw4qL
+  #     - MONGODB_DATABASE=mobius
+  #   volumes:
+  #     - mongodb:/bitnami/mongodb
+  #   logging:
+  #     driver: "none"
