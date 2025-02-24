@@ -16,7 +16,7 @@ services:
       - node-red
 
   mobius:
-    image: ghcr.io/mobiusflow/mobiusflow-v2:latest
+    image: ghcr.io/mobiusflow/balena_up_mobiusflow-v2-le:2.7.4_2.7.4
     privileged: true
     restart: unless-stopped
     environment:
@@ -57,7 +57,7 @@ services:
       - 8081:8080
 
   manage:
-    image: ghcr.io/mobiusflow/balena_up_manage-v2:2.5.41
+    image: ghcr.io/mobiusflow/balena_up_manage-v2:2.7.4
     privileged: true
     network_mode: host
     restart: always
