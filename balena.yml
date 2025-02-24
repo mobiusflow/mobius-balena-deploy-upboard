@@ -48,7 +48,7 @@ data:
     - MOBIUS_ENABLE_CONFIG_UI: true
     - MOBIUS_LICENCE: <replace with your licence code>
     - MOBIUS_LICENCE_RENEW: false
-    - MOBIUS_ENGINE_API_PORT: 8443
+    - MOBIUS_ENGINE_API_PORT: 8442
     - MOBIUS_ENGINE_API_AUTH_PROVIDER: local
   defaultDeviceType: upboard
   supportedDeviceTypes:
