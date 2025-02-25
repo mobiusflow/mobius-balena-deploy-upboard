@@ -33,12 +33,12 @@ assets:
   repository:
     type: blob.asset
     data:
-      url: "https://github.com/mobiusflow/mobius-balena-deploy-upboard"
+      url: "https://github.com/mobiusflow/mobiusview-balena-deploy-upboard"
   logo:
     type: blob.asset
     data:
       url: >-
-        https://raw.githubusercontent.com/mobiusflow/mobius-balena-deploy-upboard/master/logo.png
+        https://raw.githubusercontent.com/mobiusflow/mobiusview-balena-deploy-upboard/master/logo.png
 data:
   applicationEnvironmentVariables:
     - MOBIUS_HUB_ID: "000001"
@@ -48,9 +48,9 @@ data:
     - MOBIUS_ENABLE_CONFIG_UI: true
     - MOBIUS_LICENCE: <replace with your licence code>
     - MOBIUS_LICENCE_RENEW: false
-    - MOBIUS_ENGINE_API_PORT: 8443
+    - MOBIUS_ENGINE_API_PORT: 8442
     - MOBIUS_ENGINE_API_AUTH_PROVIDER: local
   defaultDeviceType: upboard
   supportedDeviceTypes:
     - upboard
-version: "2.5.41"
+version: "2.7.6"
