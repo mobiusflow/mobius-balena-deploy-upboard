@@ -7,7 +7,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  BALENA_APP_NAME: MobiusFlow-UP-v2
 
 jobs:
   publish:
@@ -41,12 +40,26 @@ jobs:
           always-auth: true
           scope: "@mobiusflow"
 
+      - name: Mobius Only
+        run: cd apps/mobius_only
+
       - name: balena CLI Action
         uses: balena-labs-research/community-cli-action@1.0.0
         with:
           balena_token: ${{secrets.BALENA_PUSH_TOKEN}}
           balena_cli_commands: >
             push MobiusFlow-UP-v2;
+          balena_cli_version: 18.2.1
+
+      - name: Mobius With View
+        run: cd ../mobius_with_view
+
+      - name: balena CLI Action
+        uses: balena-labs-research/community-cli-action@1.0.0
+        with:
+          balena_token: ${{secrets.BALENA_PUSH_TOKEN}}
+          balena_cli_commands: >
+            push MobiusFlow-View-UP-v2;
           balena_cli_version: 18.2.1
 
       - name: Create release
