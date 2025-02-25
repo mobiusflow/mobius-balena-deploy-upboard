@@ -1,0 +1,121 @@
+version: "2"
+volumes:
+  mobius-data:
+  mobius-licence:
+  node-red-assets:
+  node-red-data:
+  postgres:
+
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+
+  mobius:
+    image: ghcr.io/mobiusflow/balena_up_mobiusflow-v2-le:2.7.6_2.7.6
+    privileged: true
+    restart: unless-stopped
+    environment:
+      - HISTORIAN_INGEST_MQTT_HOST=mqtt://historian-ingest-mqtt
+      - HISTORIAN_INGEST_MQTT_PORT=3883
+      - HISTORIAN_INGEST_MQTT_USER=historian
+      - HISTORIAN_INGEST_MQTT_PASSWORD=kCdT94wJs5p7fUFaKgePun
+      - HISTORIAN_INGEST_ACCESS_TOKEN=hKE6CRyZL53Jcf9pW4nXze
+
+    ports:
+      - 8442:8442
+      - 1883:1883
+      - 30814:30815
+      - 30816:30817
+    volumes:
+      - mobius-data:/data
+      - mobius-licence:/licence
+    labels:
+      io.resin.features.supervisor-api: "1"
+
+  node-red:
+    image: ghcr.io/mobiusflow/node-red:latest
+    container_name: node-red
+    privileged: false
+    restart: unless-stopped
+    volumes:
+      - node-red-assets:/assets
+      - mobius-data:/data
+
+  toolbox:
+    container_name: toolbox
+    image: ghcr.io/mobiusflow/mobiusflow-toolbox:latest
+    privileged: false
+    restart: always
+
+  manage:
+    image: ghcr.io/mobiusflow/balena_up_manage-v2:2.7.6
+    privileged: true
+    network_mode: host
+    restart: always
+    volumes:
+      - mobius-data:/data
+    labels:
+      io.resin.features.dbus: "1"
+      io.resin.features.supervisor-api: "1"
+
+  historiandb:
+    image: ghcr.io/mobiusflow/historiandb:latest
+    container_name: historiandb
+    user: 0:999
+    environment:
+      POSTGRES_PASSWORD: t98U62cgjZmhzBbXLTwAsS
+      PGDATA: /home/postgres/pgdata/data
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/home/postgres
+
+  historian-ingest-mqtt:
+    container_name: historian-ingest-mqtt
+    image: ghcr.io/mobiusflow/mobius-historian-ingest-mqtt:latest
+    restart: unless-stopped
+    depends_on:
+      - historiandb
+    ports:
+      - 3883:3883
+    environment:
+      - ACTION_PERMISSIONS_FILE_PATH=./node_modules/@mobiusflow/mobius-view-action-permissions/action-permissions.yaml
+      # Postgres settings
+      - PG_HOST=historiandb
+      - PG_PORT=5432
+      - PG_PASSWORD=t98U62cgjZmhzBbXLTwAsS
+      # MQTT settings
+      - MQTT_HOST=mqtt://historian-ingest-mqtt
+      - MQTT_PORT=3883
+      - MQTT_PASSWORD=kCdT94wJs5p7fUFaKgePun
+      - ACCESS_TOKEN=hKE6CRyZL53Jcf9pW4nXze
+
+  mobius-historian-data-api:
+    container_name: mobius-historian-data-api
+    image: ghcr.io/mobiusflow/mobius-historian-data-api:latest
+    restart: unless-stopped
+    depends_on:
+      - historiandb
+    ports:
+      - 8441:8441
+    environment:
+      - API_PORT=8441
+      - ACTION_PERMISSIONS_FILE_PATH=./node_modules/@mobiusflow/mobius-view-action-permissions/action-permissions.yaml
+      - USER_SESSION_TOKEN_SECRET=cAkaRCQFYNwyD8rhebjf7K
+      # Postgres settings
+      - PG_HOST=historiandb
+      - PG_PORT=5432
+      - PG_PASSWORD=t98U62cgjZmhzBbXLTwAsS
+      # MQTT settings
+      - MQTT_HOST=mqtt://historian-ingest-mqtt
+      - MQTT_PORT=3883
+      - MQTT_PASSWORD=kCdT94wJs5p7fUFaKgePun
+
+  mobiusview-ui:
+    container_name: mobiusview-ui
+    image: ghcr.io/mobiusflow/mobiusflow-view:latest
+    privileged: false
+    restart: unless-stopped

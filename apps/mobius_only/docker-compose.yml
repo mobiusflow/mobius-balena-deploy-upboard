@@ -1,0 +1,53 @@
+version: "2"
+volumes:
+  mobius-data:
+  mobius-licence:
+  node-red-assets:
+  node-red-data:
+
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+
+  mobius:
+    image: ghcr.io/mobiusflow/balena_up_mobiusflow-v2-le:2.7.6_2.7.6
+    privileged: true
+    restart: unless-stopped
+    ports:
+      - 8442:8442
+      - 1883:1883
+      - 30814:30815
+      - 30816:30817
+    volumes:
+      - mobius-data:/data
+      - mobius-licence:/licence
+    labels:
+      io.resin.features.supervisor-api: "1"
+
+  node-red:
+    image: ghcr.io/mobiusflow/node-red:latest
+    container_name: node-red
+    privileged: false
+    restart: unless-stopped
+    volumes:
+      - node-red-assets:/assets
+      - mobius-data:/data
+
+  toolbox:
+    container_name: toolbox
+    image: ghcr.io/mobiusflow/mobiusflow-toolbox:latest
+    privileged: false
+    restart: always
+
+  manage:
+    image: ghcr.io/mobiusflow/balena_up_manage-v2:2.7.6
+    privileged: true
+    network_mode: host
+    restart: always
+    volumes:
+      - mobius-data:/data
+    labels:
+      io.resin.features.dbus: "1"
+      io.resin.features.supervisor-api: "1"
