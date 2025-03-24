@@ -105,6 +105,7 @@ services:
       - API_PORT=8441
       - ACTION_PERMISSIONS_FILE_PATH=./node_modules/@mobiusflow/mobius-view-action-permissions/action-permissions.yaml
       - USER_SESSION_TOKEN_SECRET=cAkaRCQFYNwyD8rhebjf7K
+      - HISTORIAN_INGEST_ACCESS_TOKEN=hKE6CRyZL53Jcf9pW4nXze
       # Postgres settings
       - PG_HOST=historiandb
       - PG_PORT=5432
