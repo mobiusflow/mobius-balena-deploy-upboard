@@ -13,7 +13,7 @@ services:
       - 80:80
 
   mobius:
-    image: ghcr.io/mobiusflow/balena_up_mobiusflow-v2-le:2.7.8_2.7.8
+    image: ghcr.io/mobiusflow/balena_up_mobiusflow-v2-le:2.7.9_2.7.9
     privileged: true
     restart: unless-stopped
     environment:
@@ -50,7 +50,7 @@ services:
     restart: always
 
   manage:
-    image: ghcr.io/mobiusflow/balena_up_manage-v2:2.7.8
+    image: ghcr.io/mobiusflow/balena_up_manage-v2:2.7.9
     privileged: true
     network_mode: host
     restart: always
